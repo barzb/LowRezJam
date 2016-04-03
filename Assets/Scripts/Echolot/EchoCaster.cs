@@ -3,7 +3,6 @@ using System.Collections;
 
 public class EchoCaster : MonoBehaviour
 {
-    public Grid grid;
     public int echoRange = 10;
     
 	// Use this for initialization
