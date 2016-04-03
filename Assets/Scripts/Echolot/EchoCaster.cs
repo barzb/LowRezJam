@@ -26,13 +26,13 @@ public class EchoCaster : MonoBehaviour
 
         nextActivation = Time.time + echoCooldown;
         
-        StartCoroutine(Circle(Map.Instance.Fog, Map.Instance.visibleColor));
+        StartCoroutine(Circle(Map.Instance.Fog));
     }
 
     // slowly expand the circle
-    public IEnumerator Circle(Texture2D tex, Color col)
+    public IEnumerator Circle(Texture2D tex)
     {
-        for (int r = 0; r < echoRange; r++)
+        for (int r = 2; r < echoRange; r++)
         {
             int offsetX = (int)transform.position.x;
             int offsetY = (int)transform.position.y;
@@ -41,22 +41,32 @@ public class EchoCaster : MonoBehaviour
             for (x = 0; x <= r; x++)
             {
                 d = Mathf.RoundToInt(Mathf.Sqrt(r * r - x * x));
+
                 for (y = 0; y <= d; y++)
                 {
+                    Color col = Map.Instance.fogOfWarColor;
+
+                    col.a = Mathf.Clamp01((Mathf.Sqrt((x * x) + (y * y))) / r) * 2f - 1f;
+
                     px = offsetX + x; // +x
                     nx = offsetX - x; // -x
                     py = offsetY + y; // +y
                     ny = offsetY - y; // -y
 
                     // set a pixel in every quater of the circle
-                    tex.SetPixel(px, py, col);
-                    tex.SetPixel(nx, py, col);
-                    tex.SetPixel(px, ny, col);
-                    tex.SetPixel(nx, ny, col);
+                    tex.SetPixel(px, py, CalcPixelColor(tex.GetPixel(px, py), col));
+                    tex.SetPixel(nx, py, CalcPixelColor(tex.GetPixel(nx, py), col));
+                    tex.SetPixel(px, ny, CalcPixelColor(tex.GetPixel(px, ny), col));
+                    tex.SetPixel(nx, ny, CalcPixelColor(tex.GetPixel(nx, ny), col));
                 }
             }
             tex.Apply();
             yield return new WaitForSeconds(1f/echoSpeed);
         }
+    }
+
+    private Color CalcPixelColor(Color c1, Color c2)
+    {
+        return c1.a < c2.a ? c1 : c2;
     }
 }

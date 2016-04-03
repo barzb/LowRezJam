@@ -15,7 +15,6 @@ public class Map : MonoBehaviour
 
     // INSPRECTOR ATTRIBUTES
     public Color fogOfWarColor;
-    public Color visibleColor;
     public int mapWidth;
     public int mapHeight;
 
