@@ -3,10 +3,14 @@ using System.Collections;
 
 public class Grid : MonoBehaviour
 {
-    private Texture2D mask;
-    private Sprite sprite;
+    private static Grid instance;
+
+    private int[,]      map;
+    private Texture2D   mask;
+    private Sprite      sprite;
 	
     public Texture2D Mask { get { return mask; } }
+    public static Grid Instance { get { return instance; } }
 
     public void CreateGrid(int width, int height)
     {
@@ -25,6 +29,10 @@ public class Grid : MonoBehaviour
 
     void Start()
     {
+        if (instance != null) {
+            instance = this;
+        }
+
         int gridSize = PixelPerfect.GridSize;
         CreateGrid(gridSize, gridSize);
 
@@ -36,10 +44,11 @@ public class Grid : MonoBehaviour
     {
         if (mask == null) return;
 
+        // TEST
         if(Input.GetMouseButtonUp(0))
         {
-            Vector2 clickPos = new Vector2(30, 30);
-            //clickPos = PixelPerfect.Align(clickPos);
+            Vector2 clickPos = PixelPerfect.Align(30.34f, 29.98f);
+            Debug.Log(clickPos.x + ", " + clickPos.y);
 
             mask.SetPixel((int)clickPos.x, (int)clickPos.y, Color.red);
             mask.Apply();
