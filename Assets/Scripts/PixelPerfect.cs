@@ -3,8 +3,7 @@ using System.Collections;
 
 public class PixelPerfect : MonoBehaviour
 {
-    private static int GridSize = 64;
-    
+    public static int GridSize = 64;
 
     // set new position
 	public void MoveTo(Vector2 target)
