@@ -4,6 +4,8 @@ using System.Collections;
 
 public class PlayerControl : MonoBehaviour
 {
+    private static PlayerControl instance;
+
     private static float FPS = 1f/30f;
     private float speed = 0.3f;
 
@@ -12,8 +14,13 @@ public class PlayerControl : MonoBehaviour
 
     private Text debugText;
 
+    public static PlayerControl Instance;
+
 	// Use this for initialization
-	void Start () {
+	void Start ()
+    {
+        instance = this;
+
         debugText = GameObject.FindGameObjectWithTag("DEBUG_UI").GetComponent<Text>();
 
         distancePassed = new float[2];
@@ -24,6 +31,8 @@ public class PlayerControl : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
+        // TELEPORT PLAYER IF HE IS OUT OF BOUNDS
+        CheckPlayerPosition();
 
         // ---- PIXEL PERFECT MOVEMENT ----
         // get axes
@@ -57,19 +66,31 @@ public class PlayerControl : MonoBehaviour
     // pixelPerfect number!
     void Move()
     {
-        debugText.text = "Distance: " + distancePassed[0] + ", " + distancePassed[1];
+        //  XXX REMOVE IN RELEASE XXX
+        debugText.text = "PRESS 'E' TO USE ECHOLOT \nDistance: " + distancePassed[0] + ", " + distancePassed[1];
 
         // scale with speed and round to pixelPerfect numbers
         float distanceX = PixelPerfect.Align(distancePassed[0] * speed);
         float distanceY = PixelPerfect.Align(distancePassed[1] * speed);
         
-        debugText.text += "\n" + distanceX + ", " + distanceY;
-
         // reset if movement complete
         if(distanceX != 0) distancePassed[0] = 0;
         if(distanceY != 0) distancePassed[1] = 0;
 
         // update position
         transform.position += new Vector3(distanceX, distanceY, 0f);
+    }
+
+    void CheckPlayerPosition()
+    {
+        Vector3 p = transform.position;
+        
+        if (p.x < 0f) p.x = Map.Instance.mapWidth - 1f;
+        else if (p.x >= Map.Instance.mapWidth) p.x = 0f;
+
+        if (p.y < 0f) p.y = Map.Instance.mapHeight - 1f;
+        else if (p.y >= Map.Instance.mapHeight) p.y = 0f;
+
+        transform.position = p;
     }
 }
