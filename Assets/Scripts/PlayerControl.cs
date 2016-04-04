@@ -2,9 +2,13 @@
 using UnityEngine.UI;
 using System.Collections;
 
+[RequireComponent (typeof(EchoCaster))]
+[RequireComponent (typeof(PixelCollider))]
 public class PlayerControl : MonoBehaviour
 {
     private static PlayerControl instance;
+    private PixelCollider pixCollider;
+    private EchoCaster echo;
 
     private static float FPS = 1f/30f;
     private float speed = 0.3f;
@@ -14,10 +18,11 @@ public class PlayerControl : MonoBehaviour
 
     private Text debugText;
 
-    public static PlayerControl Instance;
+    public static PlayerControl Instance { get { return instance; } }
+    public EchoCaster Echolot { get { return echo; } }
 
 	// Use this for initialization
-	void Start ()
+	void Awake ()
     {
         instance = this;
 
@@ -26,7 +31,10 @@ public class PlayerControl : MonoBehaviour
         distancePassed = new float[2];
         timePassed = 0f;
         transform.position = PixelPerfect.Align(transform.position);
-	}
+
+        pixCollider = GetComponent<PixelCollider>();
+        echo = GetComponent<EchoCaster>();
+    }
 	
 	// Update is called once per frame
 	void Update ()
@@ -78,7 +86,8 @@ public class PlayerControl : MonoBehaviour
         if(distanceY != 0) distancePassed[1] = 0;
 
         // update position
-        transform.position += new Vector3(distanceX, distanceY, 0f);
+        //transform.position += new Vector3(distanceX, distanceY, 0f);
+        pixCollider.Move(distanceX, distanceY);
     }
 
     void CheckPlayerPosition()

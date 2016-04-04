@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class EchoCaster : MonoBehaviour
 {
@@ -7,9 +8,18 @@ public class EchoCaster : MonoBehaviour
     public float echoSpeed;    // in 1/x seconds
     public float echoCooldown; // in seconds
 
+    public bool  castAtStart;
+
     // for cooldown
     private float nextActivation = 0f;
     
+    void Start()
+    {
+        if (castAtStart) { 
+            CastEcho();
+        }
+    }
+
 	// Update is called once per frame
 	void Update ()
     {
@@ -26,13 +36,13 @@ public class EchoCaster : MonoBehaviour
 
         nextActivation = Time.time + echoCooldown;
         
-        StartCoroutine(Circle(Map.Instance.Fog));
+        StartCoroutine(Circle());
     }
 
     // slowly expand the circle
-    public IEnumerator Circle(Texture2D tex)
+    public IEnumerator Circle()
     {
-        for (int r = 2; r < echoRange; r++)
+        for (int r = 2; r < echoRange; r+=2)
         {
             int offsetX = (int)transform.position.x;
             int offsetY = (int)transform.position.y;
@@ -46,27 +56,29 @@ public class EchoCaster : MonoBehaviour
                 {
                     Color col = Map.Instance.fogOfWarColor;
 
-                    col.a = Mathf.Clamp01((Mathf.Sqrt((x * x) + (y * y))) / r) * 2f - 1f;
-
+                    col.a = Mathf.Clamp01(Mathf.Clamp01((Mathf.Sqrt((x * x) + (y * y))) / r) * 2f - 1f);
+                   
                     px = offsetX + x; // +x
                     nx = offsetX - x; // -x
                     py = offsetY + y; // +y
                     ny = offsetY - y; // -y
 
-                    // set a pixel in every quater of the circle
-                    tex.SetPixel(px, py, CalcPixelColor(tex.GetPixel(px, py), col));
-                    tex.SetPixel(nx, py, CalcPixelColor(tex.GetPixel(nx, py), col));
-                    tex.SetPixel(px, ny, CalcPixelColor(tex.GetPixel(px, ny), col));
-                    tex.SetPixel(nx, ny, CalcPixelColor(tex.GetPixel(nx, ny), col));
+                    MarkPixelAsVisible(px, py, col);
+                    MarkPixelAsVisible(nx, py, col);
+                    MarkPixelAsVisible(px, ny, col);
+                    MarkPixelAsVisible(nx, ny, col);
                 }
             }
-            tex.Apply();
+
+            Texture2D fog = Map.Instance.Fog;
+            fog.Apply();
             yield return new WaitForSeconds(1f/echoSpeed);
         }
     }
-
-    private Color CalcPixelColor(Color c1, Color c2)
+    
+    public void MarkPixelAsVisible(int px, int py, Color col)
     {
-        return c1.a < c2.a ? c1 : c2;
+        Texture2D fog = Map.Instance.Fog;
+        fog.SetPixel(px, py, Map.CalcPixelColor(fog.GetPixel(px, py), col));
     }
 }
