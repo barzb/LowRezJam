@@ -21,6 +21,8 @@ public class PlayerControl : MonoBehaviour
     public static PlayerControl Instance { get { return instance; } }
     public EchoCaster Echolot { get { return echo; } }
 
+    public Animator anim;
+
 	// Use this for initialization
 	void Awake ()
     {
@@ -34,6 +36,10 @@ public class PlayerControl : MonoBehaviour
 
         pixCollider = GetComponent<PixelCollider>();
         echo = GetComponent<EchoCaster>();
+
+        if(anim == null) {
+            Debug.Log("Bat Animator not assigned on Player");
+        }
     }
 	
 	// Update is called once per frame
@@ -63,6 +69,19 @@ public class PlayerControl : MonoBehaviour
         {
             Move();
             timePassed -= FPS;
+        }
+
+        if(anim != null)
+        {
+            if (xSpeed > 0)
+                anim.SetTrigger("RIGHT");
+            else if (xSpeed < 0)
+                anim.SetTrigger("LEFT");
+            else if (ySpeed < 0)
+                anim.SetTrigger("UP");
+            else if(ySpeed > 0)
+                anim.SetTrigger("DOWN");
+
         }
     }
 
