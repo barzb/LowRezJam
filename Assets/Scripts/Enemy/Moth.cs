@@ -12,8 +12,10 @@ public class Moth : IBehaviour
     private Transform player;
     private PixelCollider pixCollider;
 
-    private float randomMovementDuration = 0f;
+    private float movementDuration = 0f;
     private Vector2 headingVector;
+
+    private static GameObject[] lights;
 
     // DEBUG
     Text ui;
@@ -24,6 +26,8 @@ public class Moth : IBehaviour
         pixCollider = GetComponent<PixelCollider>();
 
         ui = GameObject.Find("MOTH").GetComponent<Text>();
+
+        lights = GameObject.FindGameObjectsWithTag("LIGHT");
     }
 
     // Executed in Update()
@@ -32,16 +36,42 @@ public class Moth : IBehaviour
         Action start = Selector(PlayerInSight, Flee, SeekLight);
         start();
 
-        randomMovementDuration -= Time.deltaTime;
+        movementDuration -= Time.deltaTime;
         pixCollider.UpdateMovement(headingVector.x, headingVector.y, speed);
         ui.transform.position = Camera.main.WorldToScreenPoint(transform.position);
-    }
 
+        Vector2 pos = transform.position;
+        Debug.DrawLine(pos, pos + headingVector * 10f, Color.cyan);
+    }
+    
+    private Vector3 nearestLightPos; // only 4 debug
     private void SeekLight()
     {
         ui.text = "SEEK LIGHT";
 
-        MoveRandom(0.5f);
+        if(movementDuration <= 0 && lights.Length > 0)
+        {
+            GameObject nearestLight = lights[0];
+            for(int i = 1; i < lights.Length; i++)
+            {
+                float d1 = Vector2.Distance(transform.position, nearestLight.transform.position);
+                float d2 = Vector2.Distance(transform.position, lights[i].transform.position);
+                if (d1 > d2) {
+                    nearestLight = lights[i];
+                }
+            }
+            headingVector = Vector3.Normalize(nearestLight.transform.position - transform.position);
+            movementDuration = 2f;
+
+            nearestLightPos = nearestLight.transform.position;
+        }
+        
+        Debug.DrawLine(transform.position, nearestLightPos, Color.green);
+
+        if (pixCollider.isColliding) {
+            movementDuration = 0f;
+            MoveRandom(0.5f);
+        }
     }
 
     private void Flee()
@@ -53,22 +83,21 @@ public class Moth : IBehaviour
         } else {
             headingVector = Vector3.Normalize(transform.position - player.position);
         }
+
+        Debug.DrawLine(player.position, transform.position, Color.red);
     }
 
     private void MoveRandom(float duration)
     {
-        if (randomMovementDuration <= 0)
+        if (movementDuration <= 0)
         {
-            randomMovementDuration = duration;
+            movementDuration = duration;
             float randX = UnityEngine.Random.Range(-100f, +100f);
             float randY = UnityEngine.Random.Range(-100f, +100f);
 
             headingVector = new Vector2(randX, randY).normalized;
         }
-
-        Vector2 pp = transform.position;
-        Debug.DrawLine(transform.position, pp + headingVector * 10f, Color.red);
-
+        
         ui.text = "MOVE RANDOM: " + (int)headingVector.x + ", " + (int)headingVector.y;
     }
 
