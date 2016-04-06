@@ -8,7 +8,8 @@ public class EchoCaster : MonoBehaviour
     public float echoSpeed;    // in 1/x seconds
     public float echoCooldown; // in seconds
 
-    public bool  castAtStart;
+    public bool castAtStart = false;
+    public bool autoCast    = false;
 
     // for cooldown
     private float nextActivation = 0f;
@@ -23,7 +24,7 @@ public class EchoCaster : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-	    if(Input.GetButton("Action1"))
+        if (autoCast || Input.GetButton("Action1"))
         {
             CastEcho();
         }
