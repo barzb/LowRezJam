@@ -4,11 +4,13 @@ using System.Collections;
 
 [RequireComponent (typeof(EchoCaster))]
 [RequireComponent (typeof(PixelCollider))]
+[RequireComponent (typeof(BoxCollider2D))]
 public class PlayerControl : MonoBehaviour
 {
     private static PlayerControl instance;
     private PixelCollider pixCollider;
     private EchoCaster echo;
+    private BoxCollider2D hitBox;
     
     private Text debugText;
 
@@ -29,6 +31,8 @@ public class PlayerControl : MonoBehaviour
 
         pixCollider = GetComponent<PixelCollider>();
         echo = GetComponent<EchoCaster>();
+        hitBox = GetComponent<BoxCollider2D>();
+        hitBox.isTrigger = true;
 
         if(anim == null) {
             Debug.Log("Bat Animator not assigned on Player");
@@ -44,7 +48,7 @@ public class PlayerControl : MonoBehaviour
         float ySpeed = Input.GetAxis("Vertical");
 
         //  XXX REMOVE IN RELEASE XXX
-        debugText.text = "PRESS 'E' TO USE ECHOLOT \nDistance: " + xSpeed + ", " + ySpeed;
+        debugText.text = "PRESS 'R' TO USE ECHOLOT \nHeadingVec: " + xSpeed + ", " + ySpeed;
 
         pixCollider.UpdateMovement(xSpeed, ySpeed, speed);
 
@@ -58,6 +62,12 @@ public class PlayerControl : MonoBehaviour
                 anim.SetTrigger("UP");
             else if(ySpeed > 0)
                 anim.SetTrigger("DOWN");
+        }
+
+        // CAST ECHO
+        if(Input.GetButtonUp("Echolot"))
+        {
+            echo.CastEcho();
         }
     }
 

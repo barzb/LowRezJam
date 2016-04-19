@@ -8,7 +8,7 @@ public class PixelCollider : MonoBehaviour
     private bool[,] map;
     private float[] distancePassed;
     private float timePassed;
-
+    
     public bool isColliding { get; set; }
 
     // Use this for initialization
@@ -75,12 +75,12 @@ public class PixelCollider : MonoBehaviour
         return Move(new Vector3(distanceX, distanceY, 0f));
     }
 
-    public bool Move(Vector3 distance)
+    public bool Move(Vector3 headingVec)
     {
         bool collision = false;
         bool targetReached = false;
 
-        Vector3 targetPosition = transform.position + distance;
+        Vector3 targetPosition = transform.position + headingVec;
         Vector3 lastPosition = transform.position;
         Vector3 lastAlignedPosition = transform.position;
 
@@ -125,7 +125,6 @@ public class PixelCollider : MonoBehaviour
             lastPosition = nextPos;
             lastAlignedPosition = nextAlignedPos;
             transform.position = nextAlignedPos;
-            
         }
 
         return collision;
