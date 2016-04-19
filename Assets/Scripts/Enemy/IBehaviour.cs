@@ -23,6 +23,5 @@ public abstract class IBehaviour : MonoBehaviour
 
     // Executed in Update()
     protected abstract void Execute();
-    
     void Update() { Execute(); }
 }

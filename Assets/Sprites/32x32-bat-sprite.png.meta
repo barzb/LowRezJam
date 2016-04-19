@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 77598c24c3ee80d4cae86e50bb8b49e6
-timeCreated: 1459869612
+timeCreated: 1459992988
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -73,18 +73,18 @@ TextureImporter:
         y: 96
         width: 32
         height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.45826817, y: 0.14527869}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -9, y: -2}
-        - {x: -15, y: -9}
-        - {x: -15, y: -15}
-        - {x: -14, y: -16}
-        - {x: 13, y: -16}
-        - {x: 14, y: -15}
-        - {x: 14, y: -11}
-        - {x: 10, y: -2}
+      - - {x: -7.6645813, y: 9.351082}
+        - {x: -13.664581, y: 2.3510818}
+        - {x: -13.664581, y: -3.6489182}
+        - {x: -12.664581, y: -4.648918}
+        - {x: 14.335419, y: -4.648918}
+        - {x: 15.335419, y: -3.6489182}
+        - {x: 15.335419, y: 0.35108185}
+        - {x: 11.335419, y: 9.351082}
     - name: 32x32-bat-sprite_1
       rect:
         serializedVersion: 2
@@ -93,7 +93,7 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
       - - {x: 5, y: 13}
@@ -111,7 +111,7 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
       - - {x: -12, y: 12}
@@ -130,7 +130,7 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
       - - {x: -16, y: 16}
@@ -149,17 +149,17 @@ TextureImporter:
         y: 64
         width: 32
         height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.6877935, y: 0.32263947}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -11, y: 1}
-        - {x: -11, y: -8}
-        - {x: -7, y: -15}
-        - {x: -5, y: -16}
-        - {x: 10, y: -16}
-        - {x: 12, y: -15}
-        - {x: 12, y: 1}
+      - - {x: -17.009392, y: 6.675537}
+        - {x: -17.009392, y: -2.324463}
+        - {x: -13.009392, y: -9.324463}
+        - {x: -11.009392, y: -10.324463}
+        - {x: 3.9906082, y: -10.324463}
+        - {x: 5.990608, y: -9.324463}
+        - {x: 5.990608, y: 6.675537}
     - name: 32x32-bat-sprite_5
       rect:
         serializedVersion: 2
@@ -168,7 +168,7 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
       - - {x: -7, y: 16}
@@ -187,7 +187,7 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
       - - {x: 9, y: 12}
@@ -205,7 +205,7 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
       - - {x: 2, y: 12}
@@ -223,18 +223,18 @@ TextureImporter:
         y: 32
         width: 32
         height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.510433, y: 0.1765778}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 5, y: -1}
-        - {x: -5, y: -1}
-        - {x: -14, y: -9}
-        - {x: -14, y: -14}
-        - {x: -13, y: -16}
-        - {x: 12, y: -16}
-        - {x: 15, y: -13}
-        - {x: 15, y: -10}
+      - - {x: 4.6661434, y: 9.34951}
+        - {x: -5.3338566, y: 9.34951}
+        - {x: -14.333857, y: 1.3495102}
+        - {x: -14.333857, y: -3.6504898}
+        - {x: -13.333857, y: -5.65049}
+        - {x: 11.666143, y: -5.65049}
+        - {x: 14.666143, y: -2.6504898}
+        - {x: 14.666143, y: 0.3495102}
     - name: 32x32-bat-sprite_9
       rect:
         serializedVersion: 2
@@ -243,7 +243,7 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
       - - {x: -7, y: 13}
@@ -260,7 +260,7 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
       - - {x: -12, y: 12}
@@ -280,7 +280,7 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
       - - {x: -16, y: 16}
@@ -297,18 +297,18 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.31220663, y: 0.31220636}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -11, y: 1}
-        - {x: -12, y: -1}
-        - {x: -12, y: -10}
-        - {x: -3, y: -16}
-        - {x: 6, y: -16}
-        - {x: 11, y: -10}
-        - {x: 11, y: -2}
-        - {x: 10, y: 1}
+      - - {x: -4.990612, y: 7.0093966}
+        - {x: -5.990612, y: 5.0093966}
+        - {x: -5.990612, y: -3.9906034}
+        - {x: 3.009388, y: -9.990603}
+        - {x: 12.009388, y: -9.990603}
+        - {x: 17.009388, y: -3.9906034}
+        - {x: 17.009388, y: 4.0093966}
+        - {x: 16.009388, y: 7.0093966}
     - name: 32x32-bat-sprite_13
       rect:
         serializedVersion: 2
@@ -317,7 +317,7 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
       - - {x: -4, y: 16}
@@ -336,7 +336,7 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
       - - {x: -1, y: 12}
@@ -357,7 +357,7 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
       - - {x: -10, y: 12}

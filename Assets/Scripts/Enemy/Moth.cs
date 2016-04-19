@@ -4,6 +4,8 @@ using System.Collections;
 using System;
 
 [RequireComponent (typeof(PixelCollider))]
+[RequireComponent (typeof(SpriteRenderer))]
+[RequireComponent (typeof(CircleCollider2D))]
 public class Moth : IBehaviour
 {
     public int sightRadius = 10;
@@ -11,6 +13,8 @@ public class Moth : IBehaviour
 
     private Transform player;
     private PixelCollider pixCollider;
+    
+    private SpriteRenderer sprite;
 
     private float movementDuration = 0f;
     private Vector2 headingVector;
@@ -24,10 +28,14 @@ public class Moth : IBehaviour
     {
         player = PlayerControl.Instance.transform;
         pixCollider = GetComponent<PixelCollider>();
+        sprite = GetComponent<SpriteRenderer>();
+        sprite.enabled = false;
 
         ui = GameObject.Find("MOTH").GetComponent<Text>();
 
         lights = GameObject.FindGameObjectsWithTag("LIGHT");
+
+        InvokeRepeating("FindNearestLight", 0f, 5f);
     }
 
     // Executed in Update()
@@ -36,6 +44,9 @@ public class Moth : IBehaviour
         Action start = Selector(PlayerInSight, Flee, SeekLight);
         start();
 
+        if (UnityEngine.Random.Range(0f, 100f) > 99f) {
+            MoveRandom(UnityEngine.Random.Range(0.01f, 0.2f));
+        }
         movementDuration -= Time.deltaTime;
         pixCollider.UpdateMovement(headingVector.x, headingVector.y, speed);
         ui.transform.position = Camera.main.WorldToScreenPoint(transform.position);
@@ -49,28 +60,17 @@ public class Moth : IBehaviour
     {
         ui.text = "SEEK LIGHT";
 
-        if(movementDuration <= 0 && lights.Length > 0)
+        if(movementDuration <= 0)
         {
-            GameObject nearestLight = lights[0];
-            for(int i = 1; i < lights.Length; i++)
-            {
-                float d1 = Vector2.Distance(transform.position, nearestLight.transform.position);
-                float d2 = Vector2.Distance(transform.position, lights[i].transform.position);
-                if (d1 > d2) {
-                    nearestLight = lights[i];
-                }
-            }
-            headingVector = Vector3.Normalize(nearestLight.transform.position - transform.position);
-            movementDuration = 2f;
-
-            nearestLightPos = nearestLight.transform.position;
+            headingVector = Vector3.Normalize(nearestLightPos - transform.position);
+            movementDuration = UnityEngine.Random.Range(0.1f, 0.6f);
         }
         
         Debug.DrawLine(transform.position, nearestLightPos, Color.green);
 
         if (pixCollider.isColliding) {
             movementDuration = 0f;
-            MoveRandom(0.5f);
+            MoveRandom(0.3f);
         }
     }
 
@@ -79,8 +79,9 @@ public class Moth : IBehaviour
         ui.text = "FLEE";
         
         if (pixCollider.isColliding) {
-            MoveRandom(0.2f);
-        } else {
+            movementDuration = 0f;
+            MoveRandom(0.1f);
+        } else if (movementDuration <= 0) { 
             headingVector = Vector3.Normalize(transform.position - player.position);
         }
 
@@ -98,18 +99,41 @@ public class Moth : IBehaviour
             headingVector = new Vector2(randX, randY).normalized;
         }
         
-        ui.text = "MOVE RANDOM: " + (int)headingVector.x + ", " + (int)headingVector.y;
+        ui.text = "MOVE RANDOM: " + (int)(10f*headingVector.x) + ", " + (int)(10f*headingVector.y);
     }
 
     private bool PlayerInSight()
     {
-        Vector3 playerPosition = player.position;
-
-        return (Vector3.Distance(transform.position, playerPosition) < sightRadius);
+        return (Mathf.Abs(Vector3.Distance(transform.position, player.position)) < sightRadius);
     }
 
-    private Vector3 FindNearestLight()
+    private void FindNearestLight()
     {
-        return Vector3.one;
-    }        
+        GameObject nearestLight = lights[0];
+        for (int i = 1; i < lights.Length; i++)
+        {
+            float d1 = Mathf.Abs(Vector2.Distance(transform.position, nearestLight.transform.position));
+            float d2 = Mathf.Abs(Vector2.Distance(transform.position, lights[i].transform.position));
+            if (d1 > d2)
+            {
+                nearestLight = lights[i];
+            }
+        }
+
+        nearestLightPos = nearestLight.transform.position;
+    }
+
+    private void Hide()
+    {
+        sprite.enabled = false;
+    }
+
+    void OnTriggerStay2D(Collider2D other)
+    {
+        sprite.enabled = true;        
+    }
+    void OnTriggerExit2D(Collider2D other)
+    {
+         Invoke("Hide", 1f);
+    }
 }
