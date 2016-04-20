@@ -1,35 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PixelPerfect : MonoBehaviour
+public static class PixelPerfect
 {
-    private static int GridSize = 64;
-    
-
-    // set new position
-	public void MoveTo(Vector2 target)
-    {
-        transform.position = Align(target);
-    }
-
-    // set new position
-    public void MoveTo(float x, float y)
-    {
-        transform.position = Align(new Vector2(x, y));
-    }
-
-    // move towards a target with specified speed
-    public void MoveTowards(Vector2 direction, float speed)
-    {
-        float dt = Time.deltaTime;
-
-        // TODO  (Auf collision achten! RigidBody?)
-    }
-
-
+    public static int GridSize = 64;
 
     // Align coordinates to pixel perfect coordinates (depending on grid size)
-
+    // OVERLOADED METHODS
     public static Vector2 Align(Vector2 pos)
     {
         pos.x = Align(pos.x);
@@ -37,9 +14,19 @@ public class PixelPerfect : MonoBehaviour
 
         return pos;
     }
+    public static Vector2 Align(float x, float y)
+    {
+        x = Align(x);
+        y = Align(y);
 
+        return new Vector2(x, y);
+    }
+    public static Vector3 Align(Vector3 pos)
+    {
+        return Align(pos.x, pos.y);
+    }
     public static float Align(float source)
     {
-        return Mathf.Floor(source / GridSize) * GridSize;
+        return Mathf.Round(source);
     }
 }
