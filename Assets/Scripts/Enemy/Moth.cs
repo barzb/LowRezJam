@@ -20,19 +20,14 @@ public class Moth : IBehaviour
     private Vector2 headingVector;
 
     private static GameObject[] lights;
-
-    // DEBUG
-    Text ui;
-
+    
     void Start()
     {
         player = PlayerControl.Instance.transform;
         pixCollider = GetComponent<PixelCollider>();
         sprite = GetComponent<SpriteRenderer>();
         sprite.enabled = false;
-
-        ui = GameObject.Find("MOTH").GetComponent<Text>();
-
+        
         lights = GameObject.FindGameObjectsWithTag("LIGHT");
 
         InvokeRepeating("FindNearestLight", 0f, 5f);
@@ -49,17 +44,13 @@ public class Moth : IBehaviour
         }
         movementDuration -= Time.deltaTime;
         pixCollider.UpdateMovement(headingVector.x, headingVector.y, speed);
-        ui.transform.position = Camera.main.WorldToScreenPoint(transform.position);
-
         Vector2 pos = transform.position;
         Debug.DrawLine(pos, pos + headingVector * 10f, Color.cyan);
     }
     
     private Vector3 nearestLightPos; // only 4 debug
     private void SeekLight()
-    {
-        ui.text = "SEEK LIGHT";
-
+    { 
         if(movementDuration <= 0)
         {
             headingVector = Vector3.Normalize(nearestLightPos - transform.position);
@@ -75,9 +66,7 @@ public class Moth : IBehaviour
     }
 
     private void Flee()
-    {
-        ui.text = "FLEE";
-        
+    {        
         if (pixCollider.isColliding) {
             movementDuration = 0f;
             MoveRandom(0.1f);
@@ -98,8 +87,6 @@ public class Moth : IBehaviour
 
             headingVector = new Vector2(randX, randY).normalized;
         }
-        
-        ui.text = "MOVE RANDOM: " + (int)(10f*headingVector.x) + ", " + (int)(10f*headingVector.y);
     }
 
     private bool PlayerInSight()

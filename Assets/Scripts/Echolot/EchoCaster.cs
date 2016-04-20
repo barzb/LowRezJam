@@ -84,12 +84,23 @@ public class EchoCaster : MonoBehaviour
                 py = offsetY + y; // +y
                 ny = offsetY - y; // -y
 
+
                 MarkPixelAsVisible(px, py, col, fog);
                 MarkPixelAsVisible(nx, py, col, fog);
                 MarkPixelAsVisible(px, ny, col, fog);
                 MarkPixelAsVisible(nx, ny, col, fog);
+
+                if((d == y+2 || r == x+2) && !isLight)
+                {
+                    col.a = 0.1f;
+                    fog.SetPixel(px, py, col);
+                    fog.SetPixel(nx, py, col);
+                    fog.SetPixel(px, ny, col);
+                    fog.SetPixel(nx, ny, col);
+                }
             }
         }
+
         circleCol.radius = r * 0.9f;
         fog.Apply();
     }
