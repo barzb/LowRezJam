@@ -8,7 +8,7 @@ public class Map : MonoBehaviour
     private bool[,]   collisionMap;    // true = air; false = collision
     private Texture2D fog;
     private Sprite    fogSprite;
-    private float currentTime;
+    private float     currentTime;
 
     // PROPERTIES
     public Texture2D Fog { get { return fog; } }

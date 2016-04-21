@@ -20,7 +20,7 @@ public class Moth : IBehaviour
     private Vector2 headingVector;
 
     private static GameObject[] lights;
-    
+        
     void Start()
     {
         player = PlayerControl.Instance.transform;
@@ -48,7 +48,7 @@ public class Moth : IBehaviour
         Debug.DrawLine(pos, pos + headingVector * 10f, Color.cyan);
     }
     
-    private Vector3 nearestLightPos; // only 4 debug
+    private Vector3 nearestLightPos; 
     private void SeekLight()
     { 
         if(movementDuration <= 0)
