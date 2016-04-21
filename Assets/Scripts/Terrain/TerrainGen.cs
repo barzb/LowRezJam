@@ -33,6 +33,7 @@ public class TerrainGen : MonoBehaviour {
         tex.Apply(); // änderungen werden angezeigt
 
         sprite = Sprite.Create(tex, new Rect(0, 0, Map.Instance.mapWidth, Map.Instance.mapHeight), new Vector2(0f, 0f), 1);
+        sprite.texture.filterMode = FilterMode.Point;
         GetComponent<SpriteRenderer>().sprite = sprite;
 
     }
