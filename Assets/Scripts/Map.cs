@@ -9,6 +9,7 @@ public class Map : MonoBehaviour
     private Texture2D fog;
     private Sprite    fogSprite;
     private float currentTime;
+    private TerrainGen terrainGenerator;
 
     // PROPERTIES
     public Texture2D Fog { get { return fog; } }
@@ -37,9 +38,11 @@ public class Map : MonoBehaviour
         GetComponent<SpriteRenderer>().sprite = fogSprite;
 
         collisionMap = new bool[mapWidth, mapHeight];
+        terrainGenerator = GetComponent<TerrainGen>();
         // @BINA: Hier die Funktion einfügen, die das Terrain prozedural generiert
         // benutze "map" für kollisionen; also die passierbaren felder = true
-        GameObject.FindObjectOfType<TerrainGen>().noise2Texture();
+        //terrainGenerator.noise2Texture();
+        terrainGenerator.createHouses(10);
 
         ConvertTextureToCollisionMap(bgTex.sprite.texture, 1, 0.7f);
     }
