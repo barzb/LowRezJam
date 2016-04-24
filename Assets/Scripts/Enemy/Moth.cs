@@ -27,8 +27,10 @@ public class Moth : IBehaviour
         pixCollider = GetComponent<PixelCollider>();
         sprite = GetComponent<SpriteRenderer>();
         sprite.enabled = false;
-        
-        lights = GameObject.FindGameObjectsWithTag("LIGHT");
+
+        if (lights == null) {
+            lights = GameObject.FindGameObjectsWithTag("LIGHT");
+        }
 
         InvokeRepeating("FindNearestLight", 0f, 5f);
     }

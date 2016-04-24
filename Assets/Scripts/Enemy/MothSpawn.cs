@@ -10,6 +10,7 @@ public class MothSpawn : MonoBehaviour
 
     private static List<Moth> moths;
     private static List<MothSpawn> spawners;
+    private static GameObject MothContainer;
     private static int maxMoths = 0;
     private static float timePassed;
     private static int nextSpawnerIndex;
@@ -31,6 +32,8 @@ public class MothSpawn : MonoBehaviour
             spawners = new List<MothSpawn>();
             masterSpawn = true;
             nextSpawnerIndex = 0;
+
+            MothContainer = new GameObject("MOTHS");
         }
 
         spawners.Add(this);
@@ -53,14 +56,13 @@ public class MothSpawn : MonoBehaviour
             {
                 GameObject moth = Instantiate(Prefabs.Moth, spawn.transform.position, Quaternion.identity) as GameObject;
                 
-                moth.transform.SetParent(spawn.transform);
+                moth.transform.SetParent(MothContainer.transform);
                 moths.Add(moth.GetComponent<Moth>());
 
                 timePassed = 0f;
                 nextSpawnerIndex = (nextSpawnerIndex + 1) % spawners.Count;
 
-                Debug.Log("Spawn #" + nextSpawnerIndex + " has spawned a moth");
-
+                //Debug.Log("Spawn #" + nextSpawnerIndex + " has spawned a moth");
             }
         }
         else

@@ -145,4 +145,16 @@ public class PixelCollider : MonoBehaviour
 
         return !map[x, y];
     }
+
+    public bool RayCastHits(Vector3 currentPosition, Vector3 targetPosition)
+    {
+        while(Vector3.Distance(currentPosition, targetPosition) > 0.5f)
+        {
+            if (Collides(currentPosition))
+                return true;
+
+            currentPosition = PixelPerfect.Align(Vector3.MoveTowards(currentPosition, targetPosition, 1f));
+        }
+        return false;
+    }
 }
